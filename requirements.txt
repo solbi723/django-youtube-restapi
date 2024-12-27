@@ -1,3 +1,5 @@
 django>=5.0.1,<6.0.0 #Django Framework
 djangorestframework>=3.14.0,<4.0.0 #DRF (Django Rest Framework)
 psycopg2-binary>=2.9.9,<3.0
+drf-spectacular>=0.27.2,<0.28.0
+uwsgi>=2.0.24,<2.1.0

@@ -4,12 +4,11 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-ha#s5bag1y^0f3lvsa!r3!h&$be(tu&uv8s)p!av7)k%!dptmi'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'test')
 
-DEBUG = True
+DEBUG = bool(int(os.environ.get('DEBUG', 0))) # 0: False
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*'] # ex) ec2-123-123-123
 
 # Application definition
 
@@ -24,8 +23,18 @@ DJANGO_SYSTEM_APPS = [
 ]
 
 CUSTOM_USER_APPS = [
-    'users.apps.UsersConfig'
+    'users.apps.UsersConfig',
+    'videos.apps.VideosConfig',
+    'comments.apps.CommentsConfig',
+    'subscriptions.apps.SubscriptionsConfig',
+    'reactions.apps.ReactionsConfig',
+    'rest_framework',
+    'drf_spectacular'
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
 
 INSTALLED_APPS = CUSTOM_USER_APPS + DJANGO_SYSTEM_APPS
 
@@ -114,5 +123,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 # costom user model
 AUTH_USER_MODEL = 'users.User'
+
+STATIC_URL = '/static/static/'
+MEDIA_URL = '/static/media/'
+
+MEDIA_ROOT = '/vol/web/media'
+STATIC_ROOT = '/vol/web/static'
